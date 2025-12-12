@@ -119,12 +119,15 @@ impl Arguments {
 
     /// Creates a parser from [`env::args_os`].
     ///
-    /// The executable path will be removed.
+    /// The first argument (typically the executable path) will be ignored
+    /// if it is present.
     ///
     /// [`env::args_os`]: https://doc.rust-lang.org/stable/std/env/fn.args_os.html
     pub fn from_env() -> Self {
-        let mut args: Vec<_> = std::env::args_os().collect();
-        args.remove(0);
+        // On platforms without a well defined environment, like webassembly,
+        // args_os always returns an empty iterator. Skip handles this gracefully,
+        // resulting in an empty Arguments list.
+        let args: Vec<_> = std::env::args_os().skip(1).collect();
         Arguments(args)
     }
 

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Prevent panic in `Argument::from_env()` on `wasm32` due to `args_os`
+  returning zero arguments instead of one.
+  Thanks to [@cwfitzgerald](https://github.com/cwfitzgerald)
 
 ## [0.5.0] - 2022-06-04
 ### Changed
